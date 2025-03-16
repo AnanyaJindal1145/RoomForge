@@ -3,11 +3,12 @@ const Room = require("../models/Room");
 
 const router = express.Router();
 
-// Create a new room
-router.post("/create", async (req, res) => {
+const authMiddleware = require("../middleware/authMiddleware");
+
+router.post("/create", authMiddleware, async (req, res) => {
   try {
-    const { name, userId, width, height, furniture } = req.body;
-    const newRoom = new Room({ name, userId, width, height, furniture });
+    const { name, width, height, furniture } = req.body;
+    const newRoom = new Room({ name, userId: req.user.id, width, height, furniture });
     await newRoom.save();
     res.status(201).json(newRoom);
   } catch (error) {

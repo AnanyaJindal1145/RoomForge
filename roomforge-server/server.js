@@ -7,6 +7,9 @@ const app = express();
 app.use(express.json()); // Middleware to parse JSON
 app.use(cors()); // Enable CORS for frontend communication
 
+const authRoutes = require("./routes/authRoutes");
+app.use("/api/auth", authRoutes);
+
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || "your_mongodb_connection_string";
 
